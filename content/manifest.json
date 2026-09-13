@@ -1,0 +1,27 @@
+{
+  "programs": [
+    "03-team---competition.json",
+    "01-hip-hop.json",
+    "02-latinomix.json"
+  ],
+  "schedule": [
+    "03-čet.json",
+    "01-pon.json",
+    "02-tor.json"
+  ],
+  "news": [
+    "02-2.json",
+    "01-1.json"
+  ],
+  "documents": [
+    "03-3.json",
+    "02-2.json",
+    "01-1.json"
+  ],
+  "gallery": [
+    "03-3.json",
+    "02-2.json",
+    "01-1.json",
+    "04-4.json"
+  ]
+}

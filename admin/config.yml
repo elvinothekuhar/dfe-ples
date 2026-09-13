@@ -1,0 +1,75 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+site_url: "/"
+display_url: "/"
+locale: "sl"
+
+collections:
+  - name: "programs"
+    label: "Programi"
+    folder: "content/programs"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Naziv programa", name: "title", widget: "string"}
+      - {label: "Kategorija", name: "category", widget: "string"}
+      - {label: "Opis", name: "description", widget: "text"}
+      - {label: "Aktivno", name: "active", widget: "boolean", default: true}
+
+  - name: "schedule"
+    label: "Urnik"
+    folder: "content/schedule"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Dan", name: "day", widget: "string"}
+      - {label: "Program", name: "program", widget: "string"}
+      - {label: "Skupina", name: "group", widget: "string"}
+      - {label: "Termin", name: "time", widget: "string", required: false}
+      - {label: "Aktivno", name: "active", widget: "boolean", default: true}
+
+  - name: "news"
+    label: "Obvestila"
+    folder: "content/news"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Naslov", name: "title", widget: "string"}
+      - {label: "Kategorija", name: "category", widget: "string", default: "OBVESTILO / D.F.E."}
+      - {label: "Besedilo", name: "text", widget: "text"}
+      - {label: "Status", name: "status", widget: "string", required: false}
+      - {label: "Objavljeno", name: "published", widget: "boolean", default: true}
+
+  - name: "documents"
+    label: "Dokumenti"
+    folder: "content/documents"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Naziv", name: "title", widget: "string"}
+      - {label: "Opis", name: "description", widget: "string", required: false}
+      - {label: "PDF / dokument", name: "file", widget: "file", required: false}
+      - {label: "Objavljeno", name: "published", widget: "boolean", default: true}
+
+  - name: "gallery"
+    label: "Galerija"
+    folder: "content/gallery"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Naslov", name: "title", widget: "string"}
+      - {label: "Tip", name: "type", widget: "select", options: ["image", "video", "quote"]}
+      - {label: "Slika", name: "image", widget: "image", required: false}
+      - {label: "Video URL", name: "video", widget: "string", required: false}
+      - {label: "Citat", name: "quote", widget: "text", required: false}
+      - {label: "Objavljeno", name: "published", widget: "boolean", default: true}
