@@ -14,12 +14,10 @@ async function init(){
   $('#about-elevate-word').textContent=about.elevateTitle||'ELEVATE';
   $('#about-elevate-text').textContent=about.elevateText||'';
  }
- const app=await loadJSON('content/application.json');
- if(app){
-  $('#application-title').textContent=app.title||'PRIJAVNICA D.F.E.';
-  $('#application-description').textContent=app.description||'Aktualna prijavnica v PDF obliki.';
-  if(app.file){$('#application-link').href=app.file;$('#application-link').style.display='inline-flex'}
-  else $('#application-link').style.display='none';
+const applicationLink = $('#application-link');
+
+applicationLink.href = './assets/uploads/vpisnica-d-f-e.pdf';
+applicationLink.style.display = 'inline-flex';
  }
  const c=await loadJSON('content/contact.json');
  if(c){
