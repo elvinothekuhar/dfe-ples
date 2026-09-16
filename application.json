@@ -1,1 +1,6 @@
-{"title":"PRIJAVNICA D.F.E.","description":"Tukaj bo vedno na voljo aktualna prijavnica v PDF obliki.","file":"","published":true}
+{
+  "title": "PRIJAVNICA D.F.E.",
+  "description": "Tukaj bo vedno na voljo aktualna prijavnica v PDF obliki.",
+  "file": "assets/uploads/vpisnica-d-f-e.pdf",
+  "published": true
+}
