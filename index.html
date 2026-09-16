@@ -3,9 +3,150 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>D.F.E. — Urejanje strani</title>
+  <title>D.F.E. — Dance. Flow. Elevate.</title>
+  <meta name="description" content="D.F.E. — ples za otroke, mladino in odrasle.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script>
+
+<header class="site-header">
+  <a class="brand" href="#domov" aria-label="D.F.E. domov">
+    <img src="assets/logo-white.png" alt="D.F.E.">
+  </a>
+
+  <nav class="nav">
+    <a href="#domov">DOMOV</a>
+    <a href="#o-dfe">O D.F.E.</a>
+    <a href="#programi">PROGRAMI</a>
+    <a href="#prijavnica">PRIJAVNICA</a>
+    <a href="#galerija">GALERIJA</a>
+    <a href="#kontakt">KONTAKT</a>
+  </nav>
+
+  <div class="socials">
+    <a href="#kontakt" aria-label="Kontakt">↗</a>
+  </div>
+  <button class="menu" aria-label="Meni">☰</button>
+</header>
+
+<main>
+  <section id="domov" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-shade"></div>
+
+    <div class="hero-copy">
+      <div class="eyebrow">DANCE. FLOW. ELEVATE.</div>
+      <h1>PLES NI SAMO<br><span>GIBANJE.</span></h1>
+      <p>Ples je način, kako izražamo sebe, premikamo svoje meje in rastemo.</p>
+      <a class="btn btn-fill" href="#programi">SPOZNAJ D.F.E. <b>→</b></a>
+      <a class="btn" href="#prijavnica">PRIJAVI SE</a>
+    </div>
+
+    <div class="hero-note">MORE THAN MOVEMENT</div>
+    <div class="hero-side">DANCE<br>FLOW<br>ELEVATE</div>
+  </section>
+
+  <section id="programi" class="section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">D.F.E. PROGRAMI</div>
+        <h2>NAJDI SVOJ<br>RITEM.</h2>
+      </div>
+      <p>Programi za otroke, mladino in odrasle. Prostor, kjer lahko začneš, napreduješ in razvijaš svoj lasten slog.</p>
+    </div>
+    <div id="program-grid" class="program-grid"></div>
+  </section>
+
+  <section id="o-dfe" class="section about">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">O D.F.E.</div>
+        <h2 id="about-title">VEČ KOT PLES.</h2>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div id="about-lead" class="about-lead">Tukaj se ne učimo samo plesati. Tukaj rastemo skozi ples.</div>
+      <div id="about-text" class="about-text"></div>
+    </div>
+
+    <div class="manifesto">
+      <span>DANCE</span>
+      <span>FLOW</span>
+      <span>ELEVATE</span>
+    </div>
+  </section>
+
+  <section id="prijavnica" class="section application">
+    <div class="application-box">
+      <div>
+        <div class="eyebrow">PRIDRUŽI SE</div>
+        <h2 id="application-title">PRIJAVNICA D.F.E.</h2>
+        <p id="application-description">Aktualna prijavnica za vpis v D.F.E.</p>
+      </div>
+
+      <div class="pdf-box">
+        <div class="pdf-icon">PDF</div>
+        <div>
+          <strong>PRIJAVNICA</strong>
+          <small>Odpri ali prenesi aktualni obrazec.</small>
+        </div>
+        <a id="application-link" class="btn btn-fill" href="#" target="_blank" rel="noopener">ODPRI →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="galerija" class="section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">GALERIJA</div>
+        <h2>V GIBANJU.</h2>
+      </div>
+      <p>Utrinki iz sveta D.F.E.</p>
+    </div>
+    <div id="gallery-grid" class="gallery-grid"></div>
+  </section>
+
+  <section id="kontakt" class="section contact">
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow" id="contact-heading">KONTAKT</div>
+        <h2 id="contact-title">PRIDI.<br>ZAPLEŠI.<br>RASTI.</h2>
+      </div>
+
+      <div class="contact-info">
+        <div>
+          <small>LOKACIJA</small>
+          <p id="contact-location"></p>
+          <p id="contact-address"></p>
+          <p id="contact-city"></p>
+        </div>
+        <div>
+          <small>TELEFON</small>
+          <p><a id="contact-phone" href="#"></a></p>
+        </div>
+        <div>
+          <small>E-MAIL</small>
+          <p><a id="contact-email" href="#"></a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-bottom">
+      <span>D.F.E. — DANCE. FLOW. ELEVATE.</span>
+      <span>MORE THAN MOVEMENT.</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>D.F.E.</span>
+  <span>© 2026</span>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
