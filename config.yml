@@ -1,0 +1,78 @@
+backend:
+  name: github
+  repo: elvinothekuhar/dfe-ples
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+site_url: "/"
+display_url: "/"
+locale: "sl"
+
+collections:
+  - name: "programs"
+    label: "Programi"
+    folder: "content/programs"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Naziv", name: "title", widget: "string"}
+      - {label: "Podnaslov", name: "category", widget: "string"}
+      - {label: "Opis", name: "description", widget: "text", required: false}
+      - {label: "Slika", name: "image", widget: "image"}
+      - {label: "Aktivno", name: "active", widget: "boolean", default: true}
+
+  - name: "application"
+    label: "Prijavnica"
+    files:
+      - file: "content/application.json"
+        label: "Prijavnica"
+        name: "application"
+        fields:
+          - {label: "Naslov", name: "title", widget: "string"}
+          - {label: "Opis", name: "description", widget: "text"}
+          - {label: "PDF prijavnica", name: "file", widget: "file", required: false}
+          - {label: "Objavljeno", name: "published", widget: "boolean", default: true}
+
+  - name: "gallery"
+    label: "Galerija"
+    folder: "content/gallery"
+    create: true
+    format: "json"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Naslov", name: "title", widget: "string"}
+      - {label: "Slika", name: "image", widget: "image", required: false}
+      - {label: "Video URL", name: "video", widget: "string", required: false}
+      - {label: "Objavljeno", name: "published", widget: "boolean", default: true}
+
+  - name: "about"
+    label: "O D.F.E."
+    files:
+      - file: "content/about.json"
+        label: "O D.F.E."
+        name: "about"
+        fields:
+          - {label: "Naslov", name: "title", widget: "string"}
+          - {label: "Uvod", name: "lead", widget: "text"}
+          - {label: "Besedilo 1", name: "text1", widget: "text"}
+          - {label: "Besedilo 2", name: "text2", widget: "text"}
+          - {label: "Besedilo 3", name: "text3", widget: "text"}
+
+  - name: "contact"
+    label: "Kontakt"
+    files:
+      - file: "content/contact.json"
+        label: "Kontakt"
+        name: "contact"
+        fields:
+          - {label: "Naslov sekcije", name: "heading", widget: "string"}
+          - {label: "1. vrstica", name: "heading1", widget: "string"}
+          - {label: "2. vrstica", name: "heading2", widget: "string"}
+          - {label: "3. vrstica", name: "heading3", widget: "string"}
+          - {label: "Lokacija", name: "location", widget: "string"}
+          - {label: "Naslov", name: "address", widget: "string"}
+          - {label: "Pošta in kraj", name: "city", widget: "string"}
+          - {label: "Telefon", name: "phone", widget: "string"}
+          - {label: "E-mail", name: "email", widget: "string"}

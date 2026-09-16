@@ -1,71 +1,15 @@
-const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');
-menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open)});
-document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
-
-async function loadCollection(folder){
-  // The live CMS writes JSON files into these folders. A static site cannot list
-  // a directory by itself, so the deployed version can optionally use a generated
-  // manifest at content/manifest.json. If unavailable, the built-in placeholders remain.
-  try{
-    const r=await fetch('content/manifest.json',{cache:'no-store'});
-    if(!r.ok) throw new Error('manifest missing');
-    const manifest=await r.json();
-    const files=(manifest[folder]||[]);
-    const items=await Promise.all(files.map(async f=>{
-      const x=await fetch(`content/${folder}/${f}`,{cache:'no-store'});
-      return x.ok?x.json():null;
-    }));
-    return items.filter(Boolean);
-  }catch(e){return []}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+async function loadJSON(path){try{const r=await fetch(path+'?v='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
+async function loadCollection(name){const manifest=await loadJSON('content/manifest.json');const files=manifest?.[name]||[];const out=[];for(const f of files){const d=await loadJSON('content/'+name+'/'+f);if(d)out.push(d)}return out}
+async function init(){
+ const programs=(await loadCollection('programs')).filter(x=>x.active!==false).slice(0,3);
+ const grid=$('#program-grid');
+ const fallback=[['OTROCI','ZA NAJMLAJŠE PLESALEC','assets/children.jpg'],['MLADINA','RAZVIJAJ SVOJ SLOG','assets/youth.jpg'],['ODRASLI','PLES BREZ OMEJITEV','assets/adults.jpg']];
+ grid.innerHTML=(programs.length?programs:fallback.map(x=>({title:x[0],category:x[1],image:x[2]}))).map((p,i)=>`<article class="program-card"><img src="${esc(p.image||fallback[i]?.[2]||'assets/hero.jpg')}" alt="${esc(p.title)}"><div class="program-info"><div class="tag">${esc(p.category||'D.F.E. PROGRAM')}</div><h3>${esc(p.title)}</h3><p>${esc(p.description||'Ples, energija in rast.')}</p></div></article>`).join('');
+ const about=await loadJSON('content/about.json');if(about){$('#about-title').textContent=about.title||$('#about-title').textContent;$('#about-lead').textContent=about.lead||'';$('#about-text').textContent=[about.text1,about.text2,about.text3].filter(Boolean).join('\n\n')}
+ const app=await loadJSON('content/application.json');if(app){$('#application-title').textContent=app.title||'PRIJAVNICA D.F.E.';$('#application-description').textContent=app.description||'Aktualna prijavnica v PDF obliki.';if(app.file){$('#application-link').href=app.file}else{$('#application-link').style.display='none'}}
+ const gallery=(await loadCollection('gallery')).filter(x=>x.published!==false).slice(0,6);const gg=$('#gallery-grid');gg.innerHTML=(gallery.length?gallery:[{image:'assets/children.jpg',title:'Otroci'},{image:'assets/youth.jpg',title:'Mladina'},{image:'assets/adults.jpg',title:'Odrasli'}]).map(g=>g.image?`<div class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.title||'D.F.E. galerija')}"></div>`:`<div class="gallery-item"><div class="gallery-video">VIDEO</div></div>`).join('');
+ const c=await loadJSON('content/contact.json');if(c){$('#contact-heading').textContent=c.heading||'KONTAKT';$('#contact-title').innerHTML=[c.heading1,c.heading2,c.heading3].filter(Boolean).map(esc).join('<br>');$('#contact-location').textContent=c.location||'';$('#contact-address').textContent=c.address||'';$('#contact-city').textContent=c.city||'';$('#contact-phone').textContent=c.phone||'';$('#contact-phone').href='tel:'+String(c.phone||'').replace(/\s/g,'');$('#contact-email').textContent=c.email||'';$('#contact-email').href='mailto:'+String(c.email||'')}
 }
-
-function renderPrograms(items){
-  if(!items.length)return;
-  const list=document.querySelector('.program-list'); if(!list)return;
-  list.innerHTML=items.filter(x=>x.active!==false).map((p,i)=>`
-    <article class="program ${i===items.length-1?'featured':''}">
-      <div class="program-no">${String(i+1).padStart(2,'0')}</div>
-      <div><span>${p.category||''}</span><h3>${p.title||''}</h3><p>${p.description||''}</p>
-      ${i===items.length-1?'<div class="program-tag">DISCIPLINE · FOCUS · GROWTH</div>':''}</div>
-      <a href="#contact">→</a>
-    </article>`).join('');
-}
-function renderSchedule(items){
-  if(!items.length)return;
-  const table=document.querySelector('.schedule-table'); if(!table)return;
-  table.innerHTML=`<div class="row head"><span>DAN</span><span>PROGRAM</span><span>SKUPINA</span><span>TERMIN</span></div>`+
-  items.filter(x=>x.active!==false).map(x=>`<div class="row"><span>${x.day||''}</span><span>${x.program||''}</span><span>${x.group||''}</span><strong>${x.time||'—'}</strong></div>`).join('');
-}
-function renderNews(items){
-  if(!items.length)return;
-  const wrap=document.querySelector('.news'); if(!wrap)return;
-  const head=wrap.querySelector('.section-head'); const kicker=wrap.querySelector('.section-kicker');
-  wrap.innerHTML='';
-  if(kicker)wrap.append(kicker); if(head)wrap.append(head);
-  items.filter(x=>x.published!==false).forEach((x,i)=>{
-    wrap.insertAdjacentHTML('beforeend',`<article class="news-item"><span>${String(i+1).padStart(2,'0')}</span><div><small>${x.category||'OBVESTILO / D.F.E.'}</small><h3>${x.title||''}</h3><p>${x.text||''}</p></div><time>${x.status||'—'}</time></article>`);
-  });
-}
-function renderDocuments(items){
-  if(!items.length)return;
-  const list=document.querySelector('.document-list'); if(!list)return;
-  list.innerHTML=items.filter(x=>x.published!==false).map(x=>`<a href="${x.file||'#'}" class="doc" ${x.file?'target="_blank"':''}><span>PDF</span><div><strong>${x.title||''}</strong><small>${x.description||''}</small></div><b>↓</b></a>`).join('');
-}
-
-(async()=>{
-  const [p,s,n,d]=await Promise.all([
-    loadCollection('programs'),loadCollection('schedule'),loadCollection('news'),loadCollection('documents')
-  ]);
-  renderPrograms(p);renderSchedule(s);renderNews(n);renderDocuments(d);
-})();
-
-const form=document.getElementById('contactForm'),msg=document.getElementById('formMessage');
-form?.addEventListener('submit',e=>{
-  e.preventDefault(); const d=new FormData(form);
-  const subject=encodeURIComponent(`Povpraševanje – ${d.get('ime')} ${d.get('priimek')}`);
-  const body=encodeURIComponent(`Ime: ${d.get('ime')} ${d.get('priimek')}\nE-mail: ${d.get('email')}\nTelefon: ${d.get('telefon')}\n\n${d.get('sporocilo')}`);
-  window.location.href=`mailto:plesniklub-dfe@gmail.com?subject=${subject}&body=${body}`;
-  msg.textContent='Odpre se vaš e-poštni program za pošiljanje sporočila.';
-});
-const observer=new IntersectionObserver(entries=>entries.forEach(x=>{if(x.isIntersecting)x.target.classList.add('seen')}),{threshold:.12});
-document.querySelectorAll('.section,.manifesto,.statement,.full-quote').forEach(x=>observer.observe(x));
+init();
