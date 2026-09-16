@@ -18,7 +18,6 @@ const applicationLink = $('#application-link');
 
 applicationLink.href = 'https://elvinothekuhar.github.io/dfe-ples/assets/uploads/vpisnica-d-f-e.pdf';
 applicationLink.style.display = 'inline-flex';
- }
  const c=await loadJSON('content/contact.json');
  if(c){
   $('#contact-heading').textContent=c.heading||'KONTAKT';
